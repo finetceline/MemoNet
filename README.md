@@ -1,3 +1,7 @@
+# Forked version of MemoNet 
+- Addition of a script "install.sh" that creates the needed virutal environment
+- Modification of some lines in several files in order for it to run 
+
 # Remember Intentions: Retrospective-Memory-based Trajectory Prediction
 
 **Official PyTorch code** for CVPR'22 paper "Remember Intentions: Retrospective-Memory-based Trajectory Prediction".
