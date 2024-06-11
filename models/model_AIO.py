@@ -53,9 +53,9 @@ class model_encdec(nn.Module):
             if self.mode == 'addressor_warm' or self.mode == 'addressor':
                 for p in self.parameters():
                     p.requires_grad = False
-                self.memory_past = torch.load('./training/saved_memory/sdd_social_filter_past.pt').cuda()
-                self.memory_fut = torch.load('./training/saved_memory/sdd_social_filter_fut.pt').cuda()
-                self.memory_dest = torch.load('./training/saved_memory/sdd_social_part_traj.pt').cuda()[:, -1]
+                self.memory_past = torch.load('./training/saved_memory/sdd_social_filter_past.pt', map_location=torch.device('cuda:0'))
+                self.memory_fut = torch.load('./training/saved_memory/sdd_social_filter_fut.pt', map_location=torch.device('cuda:0'))
+                self.memory_dest = torch.load('./training/saved_memory/sdd_social_part_traj.pt', map_location=torch.device('cuda:0'))
                 
                 self.input_query_w = MLP(128, 128, (256, 256))
                 self.past_memory_w = MLP(128, 128, (256, 256))
@@ -63,9 +63,9 @@ class model_encdec(nn.Module):
                     self.input_query_w = pretrained_model.input_query_w
                     self.past_memory_w = pretrained_model.past_memory_w
             else:
-                self.memory_past = torch.load('./training/saved_memory/sdd_social_filter_past.pt').cuda()
-                self.memory_fut = torch.load('./training/saved_memory/sdd_social_filter_fut.pt').cuda()
-                self.memory_dest = torch.load('./training/saved_memory/sdd_social_part_traj.pt').cuda()[:, -1]
+                self.memory_past = torch.load('./training/saved_memory/sdd_social_filter_past.pt', map_location=torch.device('cuda:0'))
+                self.memory_fut = torch.load('./training/saved_memory/sdd_social_filter_fut.pt', map_location=torch.device('cuda:0'))
+                self.memory_dest = torch.load('./training/saved_memory/sdd_social_part_traj.pt', map_location=torch.device('cuda:0'))
                 
                 self.input_query_w = pretrained_model.input_query_w
                 self.past_memory_w = pretrained_model.past_memory_w

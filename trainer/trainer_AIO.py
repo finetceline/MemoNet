@@ -43,7 +43,9 @@ class Trainer:
         if config.mode == 'intention':
             self.mem_n2n = model_encdec(self.settings)
         else:
+            print("config.model_ae \n",config.model_ae)
             self.model_ae = torch.load(config.model_ae, map_location=torch.device('cpu')).cuda()
+            print("model_ae loaded")
             self.mem_n2n = model_encdec(self.settings, self.model_ae)
 
         # optimizer and learning rate
@@ -86,12 +88,14 @@ class Trainer:
                     currentValue = evaluate_addressor(self.train_dataset, self.test_dataset, self.mem_n2n, self.config, self.device)
                 else:
                     currentValue = evaluate_trajectory(self.test_dataset, self.mem_n2n, self.config, self.device)
+    
                 if currentValue<minValue:
                     minValue = currentValue
                     print('min value: {}'.format(minValue))
                     torch.save(self.mem_n2n, self.folder_test + 'model_ae_' + self.name_test)
         if self.config.mode == 'intention':
             # Generate memory banks.
+            
             model_pretrain_intention = torch.load(self.folder_test + 'model_ae_' + self.name_test)
             self.mem_n2n.load_state_dict(model_pretrain_intention.state_dict())
             self.mem_n2n.generate_memory(self.train_dataset, filter_memory=True, threshold_distance=0.5)
